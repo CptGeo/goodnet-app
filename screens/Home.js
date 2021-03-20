@@ -15,8 +15,8 @@ const Home = (props) => {
             <GoodnetView 
                 settings={gn}
                 style={styles.container}/>
-            {/* <CategoriesMenuFetcher/> */}
-            <Navi />
+            <CategoriesMenuFetcher/>
+            {/* <Navi /> */}
         </View>
         // <Text>Hello!</Text>
     )
