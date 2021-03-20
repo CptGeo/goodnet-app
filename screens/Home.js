@@ -1,8 +1,7 @@
 /**
  * Home is the default screen
  */
-import GoodnetView from "../components/GoodnetView";
-import {goodnetSettings as gn} from "../settings/GoodnetSettings";
+import GoodnetViewF from "../components/GoodnetViewF";
 import CategoriesMenuFetcher from "../components/CategoriesMenuFetcher";
 import React from "react";
 import {View, Text, StyleSheet} from "react-native";
@@ -12,9 +11,7 @@ const Home = (props) => {
 
     return (
         <View style={styles.container}>
-            <GoodnetView 
-                settings={gn}
-                style={styles.container}/>
+            <GoodnetViewF style={styles.container}/>
             <CategoriesMenuFetcher/>
             {/* <Navi /> */}
         </View>
