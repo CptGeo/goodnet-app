@@ -39,14 +39,6 @@ export default function GoodnetViewF(props){
 
 const styles = StyleSheet.create({
     container : {
-        flex: 1,
-        flexGrow: 1,
-        alignItems : 'center',
-        justifyContent : "center",
-        position : "absolute",
-        width : "100%",
-        height : "100%",
-        left: 0,
-        top : 0
+        flex: 1
     },
 });
