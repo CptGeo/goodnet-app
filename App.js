@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Home from "./screens/Home";
 import {goodnetSettings as gn} from "./settings/goodnetSettings";
-
+import CategoriesNavigation from "./components/CategoriesNavigation";
 
 export const SettingsContext = React.createContext();
 
@@ -21,8 +21,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <SettingsContext.Provider value={urlChangeHandler}>
-        <StatusBar />
-        <Home />
+        <CategoriesNavigation />
       </SettingsContext.Provider>
     </View>
   );
@@ -31,9 +30,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
     marginTop: 25
   },
 });
