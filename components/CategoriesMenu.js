@@ -2,11 +2,9 @@ import React, {Component, useContext} from "react";
 import { Text, View, StyleSheet, Button} from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import Menu, {MenuItem, MenuDivider} from "react-native-material-menu";
-import {SettingsContext} from "../App";
+import UrlContext from "./UrlContext";
 
 export default function CategoriesMenu(props){
-
-    // const changeUrl = useContext(SettingsContext);
 
     let _menu;
 
