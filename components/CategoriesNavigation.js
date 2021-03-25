@@ -1,8 +1,11 @@
 import React from "react";
-import {Button, View, StyleSheet} from "react-native";
+import {Button, View, StyleSheet, Text} from "react-native";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import {NavigationContainer} from "@react-navigation/native";
 
+
+//other
+import HiddenScreen from "./HiddenScreen";
 
 //navigation contents
 import CategoriesNavigationContents from "./CategoriesNavigationContents";
@@ -15,9 +18,9 @@ const Drawer = createDrawerNavigator();
 
 export default CategoriesNavigation = () => {
     return (
-        <NavigationContainer style={styles.container}>
+        <NavigationContainer style={styles.container} independent={true}>
             <Drawer.Navigator initialRouteName="Home" drawerContent={ props => <CategoriesNavigationContents {...props} />}>
-                <Drawer.Screen name="Home" component={Home} />
+                <Drawer.Screen name="Αρχική" component={Home}/>
             </Drawer.Navigator>
         </NavigationContainer>
     )
