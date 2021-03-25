@@ -1,9 +1,10 @@
 import React from "react";
 import {DrawerContentScrollView,DrawerItemList,DrawerItem} from "@react-navigation/drawer";
-import { ActivityIndicator } from "react-native";
-
+import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import UrlContext from "./UrlContext";
 
 export default class CategoriesNavigationContents extends React.Component{
+
     constructor(){
         super();
         this.state = {
@@ -11,6 +12,8 @@ export default class CategoriesNavigationContents extends React.Component{
             catsOk : false
         }
     }
+
+    static contextType = UrlContext;
 
     componentDidMount(){
         fetch("https://goodnet.gr/share/categories.json")
@@ -27,8 +30,9 @@ export default class CategoriesNavigationContents extends React.Component{
     }
 
     pressHandler(url){
-        console.log(url);
+        this.context.handler(url);
         this.props.navigation.toggleDrawer();
+
     }
 
 
@@ -41,8 +45,20 @@ export default class CategoriesNavigationContents extends React.Component{
         else{
 
             let categoryItems = this.state.cats.sitemap.categories.map( item => {
+                let active = false;
+                if( this.context.value == item.url){
+                    active = true;
+                }
                 return (
-                    <DrawerItem key={item.id} label={item.title} onPress={ () => {this.pressHandler(item.url)} }/>
+                    <DrawerItem 
+                        key={item.id} 
+                        label={item.title} 
+                        labelStyle={active ? styles.active : styles.button}
+                        style={active ? styles.active : styles.button}
+                        activeTintColor={active ? "black" : "red"}
+                        activeBackgroundColor={active ? "white" : "yellow"}
+                        onPress={ () => {this.pressHandler(item.url)} }
+                    />
                 )
             });
 
@@ -50,11 +66,75 @@ export default class CategoriesNavigationContents extends React.Component{
                 <DrawerContentScrollView {...this.props}>
                     <DrawerItemList {...this.props} />
                     {categoryItems}
+                    <DrawerItem
+                        key={"google"} 
+                        label={
+                            () => (
+                                <TouchableOpacity
+                                    style={styles.googleBtn}>
+                                    <Text style={styles.btnText}>Sign in with Google</Text>
+                                </TouchableOpacity>
+                            )
+                        }
+                        style={styles.socialWrapper}
+                        >
+                    </DrawerItem>
+                    <DrawerItem
+                        key={"facebook"} 
+                        label={
+                            () => (
+                                <TouchableOpacity
+                                    style={styles.facebookBtn}>
+                                    <Text style={styles.btnText}>Sign in with Facebook</Text>
+                                </TouchableOpacity>
+                            )
+                        }
+                        style={styles.socialWrapper}
+                        >
+                    </DrawerItem>
                 </DrawerContentScrollView>
             )
         }
     }
 }
+
+
+const styles = StyleSheet.create({
+    active : {
+        color: "black",
+        backgroundColor: "white"
+    },
+    button : {
+        color: "#4374ca",
+        backgroundColor : "#111"
+    },
+    socialWrapper : {
+        flex :1,
+        width: "100%",
+        margin: 0
+    },
+    googleBtn : {
+        marginVertical : 0,
+        marginHorizontal : 0,
+        paddingVertical : 15,
+        paddingHorizontal : 5,
+        backgroundColor: "#f04939",
+        borderRadius : 3
+    },
+    facebookBtn : {
+        marginVertical : 0,
+        marginHorizontal : 0,
+        paddingVertical : 15,
+        paddingHorizontal : 5,
+        backgroundColor: "#3a5897",
+        borderRadius : 3
+    },
+    btnText : {
+        fontSize : 18,
+        textTransform : "uppercase",
+        textAlign : "center"
+    }
+})
 
 
 
