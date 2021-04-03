@@ -3,11 +3,12 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Home from "./screens/Home";
 import {goodnetSettings as gn} from "./settings/goodnetSettings";
-import CategoriesNavigation from "./components/CategoriesNavigation";
+// import CategoriesNavigation from "./components/CategoriesNavigation";
 import UrlContext from "./components/UrlContext";
+import BottomNavigationMenu from "./components/BottomNavigationMenu";
 
 export default function App() {
-  const [settings, settingsChange] = useState(gn);
+  // const [settings, settingsChange] = useState(gn);
 
   const [url, urlChange] = useState("https://goodnet.gr");
 
@@ -16,17 +17,11 @@ export default function App() {
     handler : urlChange
   };
 
-  // const urlChangeHandler = (value) => {
-  //   settingsChange = useState({
-  //     ...settings,
-  //     url : value
-  //   });
-  // }
-
   return (
     <View style={styles.container}>
       <UrlContext.Provider value={args}>
-        <CategoriesNavigation />
+        {/* <CategoriesNavigation /> */}
+        <BottomNavigationMenu />
       </UrlContext.Provider>
     </View>
   );
