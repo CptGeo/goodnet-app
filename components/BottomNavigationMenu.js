@@ -2,6 +2,8 @@ import React from "react";
 import {View, Text} from "react-native";
 import BottomNavigation, {FullTab} from "react-native-material-bottom-navigation";
 
+import UrlContext from "./UrlContext";
+
 //more icons https://icons.expo.fyi/
 import Icon from '@expo/vector-icons/MaterialCommunityIcons'
 
@@ -10,7 +12,7 @@ import CategoriesNavigation from "./CategoriesNavigation";
 export default class BottomNavigationMenu extends React.Component{
 
 
-
+    static contextType = UrlContext;
     tabs = [
         {
             key: 'frontpage',
@@ -67,6 +69,25 @@ export default class BottomNavigationMenu extends React.Component{
             renderIcon={this.renderIcon(tab.icon)}
     />
     )
+
+    tabPress = (activeTab) => {
+
+        switch (activeTab) {
+            case "frontpage" : {
+                this.context.handler("https://goodnet.gr");
+                break;
+            }
+            case "user_message" : {
+                break;
+            }
+            case "listen_radio" : {
+                break;
+            }
+            case "read_later" : {
+                break;
+            } 
+        }
+    }
 
 
     render() {
