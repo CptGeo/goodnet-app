@@ -31,7 +31,18 @@ export default function GoodnetViewF(props){
                     size='large' 
                     style={styles.container}
                 />)}
-            onNavigationStateChange={navigationStateChange}
+            onNavigationStateChange={(navState) => {
+                if(navState.loading){
+                    return (
+                        <ActivityIndicator 
+                                color='#4374ca' 
+                                size='large' 
+                                style={styles.container}
+                        />
+                    )
+                }
+                urlContext.handler(navState.url);
+            }}
             // onNavigationStateChange={this.webviewNavigationChange}
             // onShouldStartLoadWithRequest={this.shouldStartLoadWithRequest}
         />
@@ -41,17 +52,19 @@ export default function GoodnetViewF(props){
 
 
 
-const navigationStateChange = (navState) => {
-    if(navState.loading){
-        return (
-            <ActivityIndicator 
-                    color='#4374ca' 
-                    size='large' 
-                    style={styles.container}
-            />
-        )
-    }
-}
+// const navigationStateChange = (navState) => {
+//     const urlContext = useContext(UrlContext);
+//     if(navState.loading){
+//         return (
+//             <ActivityIndicator 
+//                     color='#4374ca' 
+//                     size='large' 
+//                     style={styles.container}
+//             />
+//         )
+//     }
+//     urlContext.handler(navState.url);
+// }
 
 
 const styles = StyleSheet.create({
