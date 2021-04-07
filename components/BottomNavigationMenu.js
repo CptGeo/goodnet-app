@@ -18,38 +18,30 @@ export default class BottomNavigationMenu extends React.Component{
             key: 'frontpage',
             icon: 'book-open-page-variant',
             label: 'Πρωτοσέλιδο',
-            barColor: '#388E3C',
-            pressColor: 'rgba(255, 255, 255, 0.16)'
+            barColor: '#222222',
+            pressColor: '#4273c9'
         },
         {
             key: 'user_message',
             icon: 'message',
             label: 'Στείλε μήνυμα',
-            barColor: '#B71C1C',
-            pressColor: 'rgba(255, 255, 255, 0.16)'
+            barColor: '#222222',
+            pressColor: '#4273c9'
         },
         {
             key: 'listen_radio',
             icon: 'radio',
             label: 'Άκου Ραδιόφωνο',
-            barColor: '#E64A19',
-            pressColor: 'rgba(255, 255, 255, 0.16)'
+            barColor: '#222222',
+            pressColor: '#4273c9'
         },
         {
             key: 'read_later',
             icon: 'pin',
             label: 'Read later',
-            barColor: '#E64A19',
-            pressColor: 'rgba(255, 255, 255, 0.16)'
+            barColor: '#222222',
+            pressColor: '#4273c9'
         },
-        // {
-        //     key: 'more',
-        //     icon: 'dots-horizontal',
-        //     label: 'Περισσότερα',
-        //     barColor: '#E64A19',
-        //     pressColor: 'rgba(255, 255, 255, 0.16)'
-        // }
-          
       ]
 
     state = {
@@ -71,19 +63,22 @@ export default class BottomNavigationMenu extends React.Component{
     )
 
     tabPress = (activeTab) => {
-
-        switch (activeTab) {
+        switch (activeTab.key) {
             case "frontpage" : {
+                this.setState({activeTab : "frontpage"})
                 this.context.handler("https://goodnet.gr");
                 break;
             }
             case "user_message" : {
+                this.setState({activeTab : "user_message"})
                 break;
             }
             case "listen_radio" : {
+                this.setState({activeTab : "listen_radio"})
                 break;
             }
             case "read_later" : {
+                this.setState({activeTab : "read_later"})
                 break;
             } 
         }
@@ -98,7 +93,7 @@ export default class BottomNavigationMenu extends React.Component{
             </View>
             <BottomNavigation
                 activeTab={this.state.activeTab}
-                onTabPress={newTab => this.setState({ activeTab: newTab.key })}
+                onTabPress={activeTab => {this.tabPress(activeTab)}}
                 renderTab={this.renderTab}
                 tabs={this.tabs}
             />
