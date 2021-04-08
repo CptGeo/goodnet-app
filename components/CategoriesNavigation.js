@@ -3,10 +3,6 @@ import {Button, View, StyleSheet, Text} from "react-native";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import {NavigationContainer} from "@react-navigation/native";
 
-
-//other
-import HiddenScreen from "./HiddenScreen";
-
 //navigation contents
 import CategoriesNavigationContents from "./CategoriesNavigationContents";
 
