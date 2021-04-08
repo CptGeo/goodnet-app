@@ -43,7 +43,6 @@ export default class CategoriesNavigationContents extends React.Component{
             )
         }
         else{
-
             let categoryItems = this.state.cats.sitemap.categories.map( item => {
                 let active = false;
                 if( this.context.value == item.url){
@@ -53,20 +52,46 @@ export default class CategoriesNavigationContents extends React.Component{
                     <DrawerItem 
                         key={item.id} 
                         label={item.title} 
-                        labelStyle={active ? styles.active : styles.button}
-                        style={active ? styles.active : styles.button}
-                        activeTintColor={active ? "black" : "red"}
-                        activeBackgroundColor={active ? "white" : "yellow"}
+                        labelStyle={active ? styles.itemActive : styles.item}
+                        style={active ? styles.itemActiveBg : styles.itemBg}
                         onPress={ () => {this.pressHandler(item.url)} }
                     />
                 )
             });
 
+            let miscItems = this.state.cats.sitemap.other.map( item => {
+                let active = false;
+                if( this.context.value == item.url){
+                    active = true;
+                }
+                return (
+                    <DrawerItem 
+                        key={item.id} 
+                        label={item.title} 
+                        labelStyle={active ? styles.itemActive : styles.item}
+                        style={active ? styles.itemActiveBg : styles.itemBg}
+                        onPress={ () => {this.pressHandler(item.url)} }
+                    />
+                )
+            });
+            
+            let indexPage =  (
+                <DrawerItem 
+                    key={0} 
+                    label={"Αρχική"}
+                    onPress={ () => {this.pressHandler("https://goodnet.gr/")} }
+                    style={this.context.value == "https://goodnet.gr/" ? styles.itemActiveBg : styles.itemBg}
+                    labelStyle={this.context.value == "https://goodnet.gr/" ? styles.itemActive : styles.item}
+                />
+            )
+
             return (
                 <DrawerContentScrollView {...this.props}>
-                    <DrawerItemList {...this.props} />
+                    {/* <DrawerItemList {...this.props} /> */}
+                    {indexPage}
                     {categoryItems}
-                    <DrawerItem
+                    {miscItems}
+                    {/* <DrawerItem
                         key={"google"} 
                         label={
                             () => (
@@ -78,8 +103,8 @@ export default class CategoriesNavigationContents extends React.Component{
                         }
                         style={styles.socialWrapper}
                         >
-                    </DrawerItem>
-                    <DrawerItem
+                    </DrawerItem> */}
+                    {/* <DrawerItem
                         key={"facebook"} 
                         label={
                             () => (
@@ -91,7 +116,7 @@ export default class CategoriesNavigationContents extends React.Component{
                         }
                         style={styles.socialWrapper}
                         >
-                    </DrawerItem>
+                    </DrawerItem> */}
                 </DrawerContentScrollView>
             )
         }
@@ -100,13 +125,17 @@ export default class CategoriesNavigationContents extends React.Component{
 
 
 const styles = StyleSheet.create({
-    active : {
-        color: "black",
-        backgroundColor: "white"
+    itemActiveBg : {
+        backgroundColor: "#4374ca"
     },
-    button : {
-        color: "#4374ca",
-        backgroundColor : "#111"
+    itemBg : {
+        backgroundColor : "#fff"
+    },
+    itemActive : {
+        color: "#fff",
+    },
+    item : {
+        color: "#202020",
     },
     socialWrapper : {
         flex :1,
