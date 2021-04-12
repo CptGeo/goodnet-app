@@ -8,6 +8,7 @@ import UrlContext from "./UrlContext";
 import Icon from '@expo/vector-icons/MaterialCommunityIcons'
 
 import CategoriesNavigation from "./CategoriesNavigation";
+import Radio from "../screens/Radio";
 
 export default class BottomNavigationMenu extends React.Component{
 
@@ -89,7 +90,7 @@ export default class BottomNavigationMenu extends React.Component{
         return (
           <View style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
-            {this.state.activeTab === "frontpage" ? <CategoriesNavigation /> : <Text>No page</Text>}
+            {this.state.activeTab === "frontpage" ? <CategoriesNavigation /> : this.state.activeTab === "listen_radio" ? <Radio /> : <Text>No page</Text>}
             </View>
             <BottomNavigation
                 activeTab={this.state.activeTab}
