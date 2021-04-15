@@ -38,6 +38,91 @@ export default playlists = [
         title : "Alpha FM 104.7",
         url : "http://78.47.56.126:9219/stream",
         icon : "https://cdn.e-radio.gr/logos/gr/big/alpharethymno.png"
+    },
+
+
+
+
+
+    {   key : 9,
+        title : "Team FM",
+        url : "http://185.78.220.57:9200/stream.mp3",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/teamfm.png",
+    },
+    {   key : 10,
+        title : "Mousiko Kanali",
+        url : "http://185.78.220.57:9210/stream.mp3",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/musikokanali.png"
+    },
+    {   key : 11,
+        title : "Talos FM 88.6",
+        url : "http://eco.onestreaming.com:8840/stream.mp3",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/talosfm886.png"
+    },
+    {   key : 12,
+        title : "Studio 98 FM",
+        url : "http://sc2.streamwithq.com:8120/stream.mp3",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/studio980.png"
+    },
+    {   key : 13,
+        title : "Astro FM 96.4",
+        url : "http://eco.onestreaming.com:8099/;",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/radioastro.png"
+    },
+    {   key : 14,
+        title : "Capital Radio 90.7",
+        url : "http://185.78.220.57:9208/;",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/capitalradio.png"
+    },
+    {   key : 15,
+        title : "Ράδιο Μεγαλόνησος 89.8",
+        url : "http://s3.onweb.gr:8540/;",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/megalonisos898.png"
+    },
+    {   key : 16,
+        title : "Alpha FM 104.7",
+        url : "http://78.47.56.126:9219/stream",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/alpharethymno.png"
+    },
+    {   key : 17,
+        title : "Team FM",
+        url : "http://185.78.220.57:9200/stream.mp3",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/teamfm.png",
+    },
+    {   key : 18,
+        title : "Mousiko Kanali",
+        url : "http://185.78.220.57:9210/stream.mp3",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/musikokanali.png"
+    },
+    {   key : 19,
+        title : "Talos FM 88.6",
+        url : "http://eco.onestreaming.com:8840/stream.mp3",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/talosfm886.png"
+    },
+    {   key : 20,
+        title : "Studio 98 FM",
+        url : "http://sc2.streamwithq.com:8120/stream.mp3",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/studio980.png"
+    },
+    {   key : 21,
+        title : "Astro FM 96.4",
+        url : "http://eco.onestreaming.com:8099/;",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/radioastro.png"
+    },
+    {   key : 22,
+        title : "Capital Radio 90.7",
+        url : "http://185.78.220.57:9208/;",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/capitalradio.png"
+    },
+    {   key : 23,
+        title : "Ράδιο Μεγαλόνησος 89.8",
+        url : "http://s3.onweb.gr:8540/;",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/megalonisos898.png"
+    },
+    {   key : 24,
+        title : "Alpha FM 104.7",
+        url : "http://78.47.56.126:9219/stream",
+        icon : "https://cdn.e-radio.gr/logos/gr/big/alpharethymno.png"
     }
 ];
 
