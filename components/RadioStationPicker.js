@@ -23,27 +23,27 @@ export default class RadioStationPicker extends React.Component{
 
     render(){
         return (
-            <View style={styles.container}>
-                <TouchableOpacity style={styles.touchable}>
-                    <View style={styles.imageWrapper}>
-                        <Image style={styles.image} source={{uri : this.props.stationImage}}/>
-                    </View>
-                </TouchableOpacity>
-                {/* <View style={styles.text}>
-                    <Text>
-                        {this.props.stationTitle}
-                        {this.state.stationUrl}
-                    </Text>
-                </View> */}
-            </View>
+            <TouchableOpacity style={styles.itemContainer}>
+                <Image style={styles.image} source={{uri : this.props.stationImage}}/>
+            </TouchableOpacity>
         );
     }
 }
 const styles = StyleSheet.create({
-    
-    container : {
-        width : 150,
-        height : 150
+    itemContainer: {
+        justifyContent: 'flex-end',
+        flex : 1,
+        alignItems : "center",
+        borderRadius: 5,
+        padding: 10,
+        height: 100,
+        backgroundColor : "#fff",
+
+        elevation:15,
+        shadowColor: '#000',
+        shadowOffset: { width: 3, height: 3 },
+        shadowOpacity: 1,
+        shadowRadius: 5, 
     },
     image : {
         width : "100%",
