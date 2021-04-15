@@ -1,6 +1,6 @@
 import React from "react";
 import {View, Text} from "react-native";
-import BottomNavigation, {FullTab} from "react-native-material-bottom-navigation";
+import BottomNavigation, {FullTab, ShiftingTab} from "react-native-material-bottom-navigation";
 
 import UrlContext from "./UrlContext";
 
@@ -43,6 +43,13 @@ export default class BottomNavigationMenu extends React.Component{
             barColor: '#222222',
             pressColor: '#4273c9'
         },
+        {
+            key: 'more',
+            icon: 'dots-horizontal',
+            label: 'Περισσότερα',
+            barColor: '#222222',
+            pressColor: '#4273c9'
+        },
       ]
 
     state = {
@@ -50,12 +57,12 @@ export default class BottomNavigationMenu extends React.Component{
     }
 
     renderIcon = icon => ({ isActive }) => (
-        <Icon size={24} color="white" name={icon} />
+        <Icon size={26} color="white" name={icon} />
     );
 
 
     renderTab = ({ tab, isActive }) => (
-        <FullTab
+        <ShiftingTab
             isActive={isActive}
             key={tab.key}
             label={tab.label}
@@ -81,7 +88,14 @@ export default class BottomNavigationMenu extends React.Component{
             case "read_later" : {
                 this.setState({activeTab : "read_later"})
                 break;
+            }
+            case "more" : {
+                this.setState({activeTab : "more"})
+                break;
             } 
+            default : {
+                this.setState({activeTab : "frontpage"})
+            }
         }
     }
 
@@ -90,7 +104,9 @@ export default class BottomNavigationMenu extends React.Component{
         return (
           <View style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
-            {this.state.activeTab === "frontpage" ? <CategoriesNavigation /> : this.state.activeTab === "listen_radio" ? <Radio /> : <Text>No page</Text>}
+                {this.state.activeTab === "frontpage" ? <CategoriesNavigation /> : 
+                this.state.activeTab === "listen_radio" ? <Radio /> : 
+                <Text>No page</Text>}
             </View>
             <BottomNavigation
                 activeTab={this.state.activeTab}
