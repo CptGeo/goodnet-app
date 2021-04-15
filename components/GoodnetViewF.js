@@ -11,10 +11,7 @@ export default function GoodnetViewF(props){
         <WebView 
             source={
                 {
-                    uri : urlContext.value,
-                    headers : {
-                        Cookie: 'goodnet_mobile=1'
-                    }
+                    uri : urlContext.value
                 }
             }
             sharedCookiesEnabled={true}
@@ -24,7 +21,8 @@ export default function GoodnetViewF(props){
             scalesPageToFit={true}
             javaScriptEnabled={true}
             injectedJavaScript={jsCode}
-            applicationNameForUserAgent={'GoodnetMobile/1.0.3'} // user agent for identification
+            userAgent={'GoodnetMobile/1.0.3'} // user agent for identification
+            //applicationNameForUserAgent={'GoodnetMobile/1.0.3'} // user agent for identification
             renderLoading={() => (
                 <ActivityIndicator 
                     color='#4374ca' 
