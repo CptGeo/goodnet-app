@@ -1,8 +1,9 @@
 import React from "react";
-import {View, Text, TouchableOpacity, Image, StyleSheet} from "react-native";
-
+import {TouchableOpacity, Image, StyleSheet} from "react-native";
 
 export default class RadioStationPicker extends React.Component{
+
+
     constructor(){
         super();
         this.state = {
@@ -16,14 +17,9 @@ export default class RadioStationPicker extends React.Component{
         });
     }
 
-
-    sendToPlayer = (e) => {
-        //Send state to audio player
-    }
-
     render(){
         return (
-            <TouchableOpacity style={styles.itemContainer}>
+            <TouchableOpacity style={styles.itemContainer} onPress={() => this.props.pressHandler(this.props)}>
                 <Image style={styles.image} source={{uri : this.props.stationImage}}/>
             </TouchableOpacity>
         );
