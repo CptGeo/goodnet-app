@@ -3,80 +3,155 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import {TouchableOpacity} from 'react-native-gesture-handler'
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Audio } from "expo-av";
+import playlists from "../settings/streams";
+import {FlatGrid, SectionGrid} from "react-native-super-grid";
+import RadioStationPicker from "../components/RadioStationPicker";
 
 export default function AudioPlayer(props) {
-  const [playing, setPlaying] = useState(false);
-
   const [sound, setSound] = useState();
-
   const [time, setTime] = useState(0);
 
-  Audio.setAudioModeAsync({
-    allowsRecordingIOS: false,
-    staysActiveInBackground: true,
-    interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
-    playsInSilentModeIOS: true,
-    shouldDuckAndroid: true,
-    interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
-    playThroughEarpieceAndroid: false
-  });
+
+  //new
+  const [activeImg, setActiveImg] = useState("");
+  const [activeTitle, setActiveTitle] = useState("");
+  const [activeUrl, setActiveUrl] = useState("");
+  const [activeID, setActiveID] = useState("");
+  const [active, setActive] = useState(false);
+  const [playing, setPlaying] = useState(false);
+
+
+
+
+  // Audio.setAudioModeAsync({
+  //   // allowsRecordingIOS: false,
+  //   // staysActiveInBackground: true,
+  //   // interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
+  //   // playsInSilentModeIOS: true,
+  //   // shouldDuckAndroid: true,
+  //   // interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+  //   // playThroughEarpieceAndroid: false
+  // });
   
 
-  async function playSound(e) {
-    if(!playing){
-        const { sound } = await Audio.Sound.createAsync({ uri: props.streamUri });
-        setSound(sound);
-        setPlaying(true);
-        await sound.playAsync();
-
-        
+  async function playSound(soundUri) {
+    try{
+      const { sound } = await Audio.Sound.createAsync({ uri: soundUri});
+      setSound(sound);
+      setPlaying(true);
+      await sound.playAsync();
     }
-    else{
-        sound.stopAsync();
-        setPlaying(false);
+    catch{
+      console.log("Radio station not working");
     }
   }
 
-  React.useEffect(() => {
-    return sound
-      ? () => {
-          sound.unloadAsync();
-        }
-      : undefined;
-  }, [sound]);
+  async function stopSound(){
+    if(active){
+      sound.stopAsync();
+      setPlaying(false);
+    }
+  }
+
+
+
+
+  function stationPress(item){
+
+    if(!playing){
+      setActiveImg(item.icon);
+      setActiveTitle(item.title);
+      setActiveUrl(item.url);
+      setActiveID(item.key);
+      playSound(item.url);
+      setPlaying(true);
+      setActive(true);
+      
+    }
+    else if(activeID != item.key){
+      setActiveImg(item.icon);
+      setActiveTitle(item.title);
+      setActiveUrl(item.url);
+      setActiveID(item.key);
+      stopSound();
+      playSound(item.url);
+
+    }
+  }
+
+
+
+  // Delete the below if not needed
+  // React.useEffect(() => {
+  //   return sound
+  //     ? () => {
+  //         sound.unloadAsync();
+  //       }
+  //     : undefined;
+  // }, [sound]);
+
+
   return (
-    <View style={styles.container}>
-      <View style={styles.thumbWrapper}>
-        <Image style={styles.thumb} source={{ uri: props.streamImg }} />
-      </View>
-      {/* <View>
-        <Text style={styles.text}>{props.streamTitle}</Text>
-      </View> */}
-      {/* <View style={styles.playerControlsWrapper}> */}
-        <TouchableOpacity style={styles.playerPrevious}>
-          <View style={styles.iconWrapper}>
-             <Icon name="skip-previous-circle" size={30} color="#fff" />
-          </View>
-        </TouchableOpacity>
 
-        <TouchableOpacity onPress={(e) => playSound(e)} style={styles.playerPlay}>
-          <View style={styles.iconWrapper}>
-              {playing ? (<Icon name="pause-circle" size={60} color="#fff" />) : (<Icon name="play-circle" size={60} color="#fff" />)}
-          </View>
-        </TouchableOpacity>
+    <View style={styles.outer}>
+      <FlatGrid
+          itemDimension={100}
+          data={playlists}
+          style={styles.gridView}
+          // staticDimension={300}
+          // fixed
+          spacing={10}
+          renderItem={({ item }) => (
+            <RadioStationPicker
+              key={item.key}
+              stationID={item.key}
+              stationImage={item.icon}
+              stationTitle={item.title}
+              stationUrl={item.url}
+              pressHandler={() => stationPress(item)}
+            />
+          )}
+        />
+      {active ? (
+      <View style={styles.container}>
+        <View style={styles.thumbWrapper}>
+          <Image style={styles.thumb} source={{ uri: activeImg }} />
+        </View>
+          <TouchableOpacity style={styles.playerPrevious}>
+            <View style={styles.iconWrapper}>
+              <Icon name="skip-previous-circle" size={30} color="#fff" />
+            </View>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.playerNext}>
-          <View style={styles.iconWrapper}>
-            <Icon name="skip-next-circle" size={30} color="#fff" />
-          </View>
-        </TouchableOpacity>
-      {/* </View> */}
+          {!playing ? (
+            <TouchableOpacity onPress={() => playSound(activeUrl)} style={styles.playerPlay}>
+            <View style={styles.iconWrapper}>
+                <Icon name="play-circle" size={60} color="#fff"/>
+            </View>
+            </TouchableOpacity>
+          ) : (
+          <TouchableOpacity onPress={() => stopSound()} style={styles.playerPlay}>
+            <View style={styles.iconWrapper}>
+                <Icon name="pause-circle" size={60} color="#fff"/>
+            </View>
+          </TouchableOpacity>
+          )}
 
+          <TouchableOpacity style={styles.playerNext}>
+            <View style={styles.iconWrapper}>
+              <Icon name="skip-next-circle" size={30} color="#fff" />
+            </View>
+          </TouchableOpacity>
+      </View> ) : (<></>)}
     </View>
+
   );
 }
 
 const styles = StyleSheet.create({
+  outer : {
+    flex : 1
+  },
   container: {
     flex: 1,
     flexDirection: "row",
@@ -130,5 +205,9 @@ const styles = StyleSheet.create({
     flex : 1,
     marginRight : 10,
     opacity : 0.8
-  }
+  },
+  gridView: {
+    marginTop: 10,
+    flex: 1,
+  },
 });
