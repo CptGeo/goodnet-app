@@ -7,6 +7,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import UrlContext from "./components/UrlContext";
 import BottomNavigationMenu from "./components/BottomNavigationMenu";
 
+
+//check here for more
+//https://github.com/expo/examples/blob/master/with-sqlite/App.js
+import * as SQLite from 'expo-sqlite';
+
+const db = SQLite.openDatabase("favourites");
+
+
 export default function App() {
   // const [settings, settingsChange] = useState(gn);
 
