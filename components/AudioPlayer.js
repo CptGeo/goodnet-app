@@ -64,7 +64,6 @@ export default function AudioPlayer(props) {
       setActiveUrl(item.url);
       setActiveID(item.key);
       playSound(item.url);
-      setPlaying(true);
       setActive(true);
       
     }
