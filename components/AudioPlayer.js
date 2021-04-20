@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import {TouchableOpacity} from 'react-native-gesture-handler'
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Audio } from "expo-av";
 import playlists from "../settings/streams";
-import {FlatGrid, SectionGrid} from "react-native-super-grid";
+import {FlatGrid} from "react-native-super-grid";
 import RadioStationPicker from "../components/RadioStationPicker";
 
 export default function AudioPlayer(props) {
@@ -32,6 +32,10 @@ export default function AudioPlayer(props) {
   //   // interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
   //   // playThroughEarpieceAndroid: false
   // });
+
+  // useEffect( () => {
+  //   return closePlayer;
+  // },[]);
   
 
   async function playSound(soundUri) {
@@ -51,6 +55,11 @@ export default function AudioPlayer(props) {
       sound.stopAsync();
       setPlaying(false);
     }
+  }
+
+  const closePlayer = () => {
+    stopSound();
+    setActive(false);
   }
 
 
