@@ -7,7 +7,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler'
 import {StyleSheet, View, Text, Image} from "react-native";
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
-export default Home = ({navigation}) => {
+export default function Home ({navigation}){
 
     return (
       <View style={styles.container}>
