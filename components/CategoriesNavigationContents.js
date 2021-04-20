@@ -1,127 +1,93 @@
-import React from "react";
-import {DrawerContentScrollView,DrawerItemList,DrawerItem} from "@react-navigation/drawer";
-import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import React, {useState, useEffect, useContext} from "react";
+import {DrawerContentScrollView, DrawerItem} from "@react-navigation/drawer";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import UrlContext from "./UrlContext";
 
-export default class CategoriesNavigationContents extends React.Component{
+export default function CategoriesNavigationContents(props){
 
-    constructor(){
-        super();
-        this.state = {
-            cats : '', 
-            catsOk : false
-        }
-    }
 
-    static contextType = UrlContext;
+    const [cats, setCats] = useState('');
+    const [catsOk, setCatsOk] = useState(false);
 
-    componentDidMount(){
+    const urlCtx = useContext(UrlContext);
+
+    useEffect( () => {
         fetch("https://goodnet.gr/share/categories.json")
         .then(response => response.json())
         .then(data => {
-            this.setState(
-                {
-                    cats : data,
-                    catsOk : true
-                }
-            )
+            setCats(data);
+            setCatsOk(true);
         })
         .catch(error => console.log(error));
+    }, []);
+
+    const pressHandler = (url) => {
+        urlCtx.handler(url);
+        props.navigation.toggleDrawer();
     }
 
-    pressHandler(url){
-        this.context.handler(url);
-        this.props.navigation.toggleDrawer();
 
+
+    if(!catsOk){
+        return (
+            <ActivityIndicator color={"blue"}/>
+        )
     }
-
-
-    render(){
-        if(!this.state.catsOk){
+    else{
+        const categoryItems = cats.sitemap.categories.map( item => {
+            let active = false;
+            if( urlCtx.value == item.url){
+                active = true;
+            }
             return (
-                <ActivityIndicator color={"blue"}/>
-            )
-        }
-        else{
-            let categoryItems = this.state.cats.sitemap.categories.map( item => {
-                let active = false;
-                if( this.context.value == item.url){
-                    active = true;
-                }
-                return (
-                    <DrawerItem 
-                        key={item.id} 
-                        label={item.title} 
-                        labelStyle={active ? styles.itemActive : styles.item}
-                        style={active ? styles.itemActiveBg : styles.itemBg}
-                        onPress={ () => {this.pressHandler(item.url)} }
-                    />
-                )
-            });
-
-            let miscItems = this.state.cats.sitemap.other.map( item => {
-                let active = false;
-                if( this.context.value == item.url){
-                    active = true;
-                }
-                return (
-                    <DrawerItem 
-                        key={item.id} 
-                        label={item.title} 
-                        labelStyle={active ? styles.itemActive : styles.item}
-                        style={active ? styles.itemActiveBg : styles.itemBg}
-                        onPress={ () => {this.pressHandler(item.url)} }
-                    />
-                )
-            });
-            
-            let indexPage =  (
                 <DrawerItem 
-                    key={0} 
-                    label={"Αρχική"}
-                    onPress={ () => {this.pressHandler("https://goodnet.gr/")} }
-                    style={this.context.value == "https://goodnet.gr/" ? styles.itemActiveBg : styles.itemBg}
-                    labelStyle={this.context.value == "https://goodnet.gr/" ? styles.itemActive : styles.item}
+                    key={item.id} 
+                    label={item.title} 
+                    labelStyle={active ? styles.itemActive : styles.item}
+                    style={active ? styles.itemActiveBg : styles.itemBg}
+                    onPress={ () => {pressHandler(item.url)} }
                 />
             )
-
+        });
+        
+        const indexPage = (
+            <DrawerItem 
+                key={0} 
+                label={"Αρχική"}
+                onPress={ () => {pressHandler("https://goodnet.gr/")} }
+                style={urlCtx.value == "https://goodnet.gr/" ? styles.itemActiveBg : styles.itemBg}
+                labelStyle={urlCtx.value == "https://goodnet.gr/" ? styles.itemActive : styles.item}
+            />
+        );
+        
+        const miscItems = cats.sitemap.other.map( item => {
+            let active = false;
+            if(urlCtx.value == item.url){
+                active = true;
+            }
             return (
-                <DrawerContentScrollView {...this.props}>
-                    {/* <DrawerItemList {...this.props} /> */}
-                    {indexPage}
-                    {categoryItems}
-                    {miscItems}
-                    {/* <DrawerItem
-                        key={"google"} 
-                        label={
-                            () => (
-                                <TouchableOpacity
-                                    style={styles.googleBtn}>
-                                    <Text style={styles.btnText}>Sign in with Google</Text>
-                                </TouchableOpacity>
-                            )
-                        }
-                        style={styles.socialWrapper}
-                        >
-                    </DrawerItem> */}
-                    {/* <DrawerItem
-                        key={"facebook"} 
-                        label={
-                            () => (
-                                <TouchableOpacity
-                                    style={styles.facebookBtn}>
-                                    <Text style={styles.btnText}>Sign in with Facebook</Text>
-                                </TouchableOpacity>
-                            )
-                        }
-                        style={styles.socialWrapper}
-                        >
-                    </DrawerItem> */}
-                </DrawerContentScrollView>
+                <DrawerItem 
+                    key={item.id} 
+                    label={item.title} 
+                    labelStyle={active ? styles.itemActive : styles.item}
+                    style={active ? styles.itemActiveBg : styles.itemBg}
+                    onPress={ () => {pressHandler(item.url)} }
+                />
             )
-        }
+        });
+
+
+        return (
+            <DrawerContentScrollView {...props}>
+                {indexPage}
+                {categoryItems}
+                {miscItems}
+            </DrawerContentScrollView>
+        )
     }
+
 }
+
 
 
 const styles = StyleSheet.create({
@@ -163,25 +129,4 @@ const styles = StyleSheet.create({
         textTransform : "uppercase",
         textAlign : "center"
     }
-})
-
-
-
-
-//custom navigation elements
-
-// export default CategoriesNavigationContents = props => {
-//     return (
-//         <DrawerContentScrollView {...props}>
-//             <DrawerItemList {...props} />
-//             <DrawerItem 
-//                 label={"Close drawer"}
-//                 onPress={() => props.navigation.closeDrawer()}
-//                 />
-//             <DrawerItem 
-//                 label={"Toggle drawer"}
-//                 onPress={() => props.navigation.toggleDrawer()}
-//                 />
-//         </DrawerContentScrollView>
-//     )
-// }
+});
