@@ -6,7 +6,7 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import CategoriesNavigation from "./CategoriesNavigation";
 import Radio from "../screens/Radio";
 import tabs from "../settings/tabs";
-
+import Pinned from "../screens/Pinned";
 
 
 export default function BottomNavigationMenu(){
@@ -63,6 +63,7 @@ export default function BottomNavigationMenu(){
             <View style={{ flex: 1 }}>
                 {activeTab === "frontpage" ? <CategoriesNavigation /> : 
                 activeTab === "listen_radio" ? <Radio /> : 
+                activeTab === "read_later" ? <Pinned /> :
                 <Text>No page</Text>}
             </View>
             <BottomNavigation
