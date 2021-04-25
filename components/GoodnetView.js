@@ -14,9 +14,21 @@ export default function GoodnetView(props){
     const jsCode = `let everything = document.querySelectorAll("*"); everything.forEach(item => {item.style.userSelect = 'none'})`;
 
     const [favourite, setFavourite] = useState(false);
+    const [title, setTitle] = useState('');
     
 
 
+    // const getUrlPageTitle = (url) => {
+    //     let title = '';
+    //     fetch(url)
+    //     .then(res => res.text())
+    //     .then(data => {
+    //         title = data.split('<title>')[1].split('</title>')[0];
+    //     })
+    //     .catch(() => console.log("Error"));
+
+    //     return title;
+    // }
     
     const isNewsUrl = (url = '') => {
         if(url === ''){
@@ -60,6 +72,19 @@ export default function GoodnetView(props){
         }
     });
 
+    useEffect( () => {
+        console.log("Use effect");
+        if(isNewsUrl()) {
+            fetch(urlContext.value)
+            .then(res => res.text())
+            .then(data => {
+                let t = data.split('<h1 class="article-single__title">')[1].split('</h1>')[0];
+                setTitle(t);
+            })
+        }
+    }, [urlContext.value]);
+
+
     const toggleFavourite = () => {
         //Check if already added 
 
@@ -76,7 +101,8 @@ export default function GoodnetView(props){
             //insert to favourites
             const query = "INSERT INTO favourite_news (title, favourite_url) VALUES (?, ?)";
             db.transaction(tx => {
-                tx.executeSql(query, ['title', urlContext.value], (tx, rs) => {
+                console.log(title);
+                tx.executeSql(query, [title, urlContext.value], (tx, rs) => {
                     setFavourite(true);
                 }, errorDB);
             })
@@ -145,14 +171,14 @@ const styles = StyleSheet.create({
     },
     webview : {
         flex: 1,
-        position : "relative",
-        zIndex: 1
+        // position : "relative",
+        zIndex: -1
     },
     favoritesBtn: {
         position: "absolute",
         top: 10,
         right: 10,
-        zIndex: 1000,
+        zIndex: 9999,
         width : 34,
         height : 34,
         alignItems: "center",
