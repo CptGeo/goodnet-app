@@ -215,7 +215,6 @@ const styles = StyleSheet.create({
     opacity : 0.8
   },
   gridView: {
-    marginTop: 10,
     flex: 1,
   },
 });
