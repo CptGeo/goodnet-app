@@ -42,9 +42,12 @@ export default function App() {
         CREATE TABLE IF NOT EXISTS favourite_news (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           title TEXT DEFAULT '',
+          img_src TEXT DEFAULT '',
           favourite_url TEXT NOT NULL,
           timestamp TEXT DEFAULT CURRENT_TIMESTAMP
         );`;
+      
+      // const query = `DROP TABLE favourite_news`;
       tx.executeSql(query, [], successDB, errorDB);
     })
   }
