@@ -5,9 +5,11 @@ import UrlContext from "./UrlContext";
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import {TouchableOpacity} from 'react-native-gesture-handler'
 
+// import FavouritesDB from "../helpers/database/FavouritesDB";
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase("favourites");
+// const db = new FavouritesDB("favourites");
 
 export default function GoodnetView(props){
     const urlContext = useContext(UrlContext);
@@ -15,8 +17,8 @@ export default function GoodnetView(props){
 
     const [favourite, setFavourite] = useState(false);
     const [title, setTitle] = useState('');
-    
 
+    const [image, setImage] = useState('');
 
     // const getUrlPageTitle = (url) => {
     //     let title = '';
@@ -45,6 +47,7 @@ export default function GoodnetView(props){
     }
 
 
+    //comment
     const checkIfFavourite = () => {
         const query = "SELECT * FROM favourite_news WHERE favourite_url = ? ";
         db.transaction(tx => {
@@ -69,17 +72,25 @@ export default function GoodnetView(props){
     useEffect( () => {
         if(isNewsUrl()) {
             checkIfFavourite();
+            // fav.isFavourite(urlContext.value) ? setFavourite(true) : setFavourite(false);
         }
     });
 
     useEffect( () => {
-        console.log("Use effect");
         if(isNewsUrl()) {
             fetch(urlContext.value)
             .then(res => res.text())
             .then(data => {
-                let t = data.split('<h1 class="article-single__title">')[1].split('</h1>')[0];
-                setTitle(t);
+                try{
+                    let t = data.split('<meta property="og:title" content="')[1].split('" />')[0];
+                    let i = data.split('<meta property="og:image" content="')[1].split('">')[0];
+    
+                    setImage(i);
+                    setTitle(t);
+                }catch(e){
+                    console.log(e);
+                }
+
             })
         }
     }, [urlContext.value]);
@@ -99,13 +110,14 @@ export default function GoodnetView(props){
         }
         else{
             //insert to favourites
-            const query = "INSERT INTO favourite_news (title, favourite_url) VALUES (?, ?)";
-            db.transaction(tx => {
-                console.log(title);
-                tx.executeSql(query, [title, urlContext.value], (tx, rs) => {
-                    setFavourite(true);
-                }, errorDB);
-            })
+            const query = "INSERT INTO favourite_news (title, favourite_url, img_src) VALUES (?, ?, ?)";
+            if(title && urlContext.value && image){
+                db.transaction(tx => {
+                    tx.executeSql(query, [title, urlContext.value, image], (tx, rs) => {
+                        setFavourite(true);
+                    }, errorDB);
+                })
+            }
         }
     }
     
@@ -178,7 +190,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: 10,
         right: 10,
-        zIndex: 9999,
+        zIndex: 99,
         width : 34,
         height : 34,
         alignItems: "center",
