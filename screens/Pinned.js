@@ -1,17 +1,24 @@
-import React, {useState, useEffect} from "react";
-import {View, Text, StyleSheet, Image} from "react-native";
+import React, {useState, useEffect, useContext} from "react";
+import {View, Text, StyleSheet, Image, TouchableOpacity} from "react-native";
 import * as SQLite from "expo-sqlite";
 import {FlatGrid} from "react-native-super-grid";
-
+// import { Icon } from "react-native-vector-icons/Icon";
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import TabContext from "../components/TabContext";
+import UrlContext from "../components/UrlContext";
 export default function Pinned({navigation}){
 
     const [pinned, setPinned] = useState([]);
     const [found, setFound] = useState(false);
     
-    useEffect( () => {
-        const db = SQLite.openDatabase("favourites");
+    const [favouritesDB, setFavouritesDB] = useState(SQLite.openDatabase("favourites")); 
 
-        db.transaction( tx => {
+    const tabsCtx = useContext(TabContext);
+    const urlCtx = useContext(UrlContext);
+
+    useEffect( () => {
+        // favouritesDB = SQLite.openDatabase("favourites");
+        favouritesDB.transaction( tx => {
             const query = "SELECT * FROM favourite_news WHERE 1 ORDER BY timestamp DESC";
             tx.executeSql(
                 query, 
@@ -36,9 +43,39 @@ export default function Pinned({navigation}){
                     console.log("Query Error");
                     console.log(err);
                 }
-            );
+            )
         });
     }, []);
+
+
+    
+    const readFavourite = item => {
+        //set favourite url state
+        urlCtx.handler(item.favourite_url);
+
+        //change tab to the reader
+        tabsCtx.handler("frontpage");
+    }
+
+    const removeFromFavourites = item => {
+        const query = "DELETE FROM favourite_news WHERE id = ?";
+        favouritesDB.transaction(tx => {
+            tx.executeSql(
+                query, 
+                [item.id], 
+                (tx, rs) => {
+                    //update state of shown favourites
+                    setPinned(pinned.filter(i => i.id !== item.id ));
+                }, 
+                errorDB
+            );
+        })
+    }
+
+    const errorDB = (tx, err) => {
+        console.log("Error");
+        console.log(err);
+    }
 
     return (
         <View style={styles.container}>
@@ -56,27 +93,37 @@ export default function Pinned({navigation}){
             {found ? (
                 // <Text>Found</Text>
                 <FlatGrid
-                    itemDimension={100}
+                    itemDimension={180}
                     data={pinned}
-                    // style={styles.gridView}
+                    style={styles.gridView}
                     // staticDimension={300}
                     // fixed
                     spacing={10}
                     renderItem={({ item }) => (
-                    <View>
-                        <Text>{item.id}</Text>
-                        <Text>{item.title}</Text>
-                        <Text>{item.favourite_url}</Text>
-                        <Text>{item.timestamp}</Text>
-                    </View>
-                    // <RadioStationPicker
-                    //     key={item.key}
-                    //     stationID={item.key}
-                    //     stationImage={item.icon}
-                    //     stationTitle={item.title}
-                    //     stationUrl={item.url}
-                    //     pressHandler={() => stationPress(item)}
-                    // />
+                    
+                    <TouchableOpacity style={styles.item} onPress={() => readFavourite(item)}>
+                        {item.img_src ? 
+                            (<Image style={styles.itemThumb} source={{uri : item.img_src}}/>) :
+                            (<Image style={styles.itemThumb} source={require('../assets/goodnet_logo.png')}/>)
+                        }
+                        
+                        {item.title ? (
+                            <View style={styles.itemTextWrapper}>
+                                <Text style={styles.itemText}>{item.title.slice(0,68).concat("...")}</Text>
+                            </View>
+                        ) : 
+                            (<View style={styles.itemTextWrapper}>
+                                <Text style={styles.itemText}>No title available</Text>
+                            </View>
+                        )}
+                        {item.favourite_url ? (
+                            <TouchableOpacity style={styles.favoritesBtn} onPress={() => removeFromFavourites(item)}>
+                                <Icon size={34} color="#db2625" name={"heart"} />
+                            </TouchableOpacity>)
+                        : (<></>)
+                        }
+
+                    </TouchableOpacity>
                 )}
             />
             ) : 
@@ -88,7 +135,7 @@ export default function Pinned({navigation}){
 
 const styles = StyleSheet.create({
     container : {
-        flex : 1
+        flex : 1,
     },
     header : {
         flexDirection: "row",
@@ -114,4 +161,48 @@ const styles = StyleSheet.create({
         width: 70,
         height: "100%"
       },
+      item : {
+        flexDirection : "row",
+        flex : 1,
+        justifyContent : "space-between",
+
+        borderRadius: 9,
+        elevation: 15,
+        shadowColor: '#000',
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 1,
+        shadowRadius: 5, 
+        overflow : "hidden"
+      },
+      itemThumb: {
+        width: 180,
+        height: 180,
+        marginRight : 15,
+      },
+      itemTextWrapper: {
+          flexDirection : "row",
+          position: "absolute",
+          zIndex : 99,
+          width : "100%",
+          bottom : 0,
+      },
+      itemText : {
+        color: "#fff",
+        padding : 10,
+        fontSize : 15,
+        textShadowColor: '#00000099',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 2, 
+      },
+      favoritesBtn: {
+        position: "absolute",
+        top: 10,
+        right: 10,
+        zIndex: 99,
+        width : 34,
+        height : 34,
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 5,
+    }
 });
