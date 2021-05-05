@@ -127,7 +127,11 @@ export default function Pinned({navigation}){
                 )}
             />
             ) : 
-            (<Text>Nothing Found</Text>)}
+            (
+                <View style={styles.nothingFoundWrapper}>
+                    <Text style={styles.nothingFound}>Δεν έχετε κανένα αγαπημένο άρθρο ...</Text>
+                </View>
+            )}
             
         </View>
     )
@@ -204,5 +208,16 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 5,
+    },
+    nothingFoundWrapper: {
+        flex: 1,
+        textAlign: "center",
+        alignItems: "center",
+        padding: 30,
+        backgroundColor: "#eee",
+        justifyContent: "center"
+    },
+    nothingFound: {
+        color: "#999"
     }
 });
