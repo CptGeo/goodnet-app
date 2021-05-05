@@ -8,7 +8,7 @@ import CategoriesNavigation from "./CategoriesNavigation";
 import Radio from "../screens/Radio";
 import tabs from "../settings/tabs";
 import Pinned from "../screens/Pinned";
-
+import Message from "../screens/Message";
 
 export default function BottomNavigationMenu(props){
 
@@ -54,10 +54,10 @@ export default function BottomNavigationMenu(props){
                 setActiveTab("read_later");
                 break;
             }
-            case "more" : {
-                setActiveTab("more");
-                break;
-            } 
+            // case "more" : {
+            //     setActiveTab("more");
+            //     break;
+            // } 
             default : {
                 setActiveTab("frontpage");
             }
@@ -71,6 +71,7 @@ export default function BottomNavigationMenu(props){
                     {activeTab === "frontpage" ? <CategoriesNavigation /> : 
                     activeTab === "listen_radio" ? <Radio /> : 
                     activeTab === "read_later" ? <Pinned /> :
+                    activeTab === "user_message" ? <Message /> :
                     <Text>No page</Text>}
                 </View>
                 <BottomNavigation
