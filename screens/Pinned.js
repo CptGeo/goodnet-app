@@ -6,6 +6,11 @@ import {FlatGrid} from "react-native-super-grid";
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import TabContext from "../components/TabContext";
 import UrlContext from "../components/UrlContext";
+import PageHeader from "../components/PageHeader";
+
+
+
+
 export default function Pinned({navigation}){
 
     const [pinned, setPinned] = useState([]);
@@ -79,19 +84,9 @@ export default function Pinned({navigation}){
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <View style={styles.headerImageWrapper}>
-                    <Image style={styles.headerImage} source={require('../assets/goodnet_logo.png')} />
-                </View>
-                <View style={styles.headerTextWrapper}>
-                    <Text style={styles.headerText}>Αγαπημένα άρθρα</Text>
-                </View>
-            </View>
-
-
+            <PageHeader title={"Αγαπημένα άρθρα"}/>
 
             {found ? (
-                // <Text>Found</Text>
                 <FlatGrid
                     itemDimension={180}
                     data={pinned}
@@ -141,31 +136,7 @@ const styles = StyleSheet.create({
     container : {
         flex : 1,
     },
-    header : {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        backgroundColor: "#222",
-        paddingRight : 10,
-        maxHeight : 70,
-      },
-      headerText: {
-        color: "#fff",
-        fontSize : 20
-      },
-      headerImageWrapper: {
-        padding : 10,
-        backgroundColor: "#fff"
-      },
-      headerTextWrapper : {
-        flex: 4,
-        marginLeft : 20
-      },
-      headerImage: {
-        width: 70,
-        height: "100%"
-      },
-      item : {
+    item : {
         flexDirection : "row",
         flex : 1,
         justifyContent : "space-between",
@@ -177,28 +148,28 @@ const styles = StyleSheet.create({
         shadowOpacity: 1,
         shadowRadius: 5, 
         overflow : "hidden"
-      },
-      itemThumb: {
+    },
+    itemThumb: {
         width: 180,
         height: 180,
         marginRight : 15,
-      },
-      itemTextWrapper: {
-          flexDirection : "row",
-          position: "absolute",
-          zIndex : 99,
-          width : "100%",
-          bottom : 0,
-      },
-      itemText : {
+    },
+    itemTextWrapper: {
+        flexDirection : "row",
+        position: "absolute",
+        zIndex : 99,
+        width : "100%",
+        bottom : 0,
+    },
+    itemText : {
         color: "#fff",
         padding : 10,
         fontSize : 15,
         textShadowColor: '#00000099',
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 2, 
-      },
-      favoritesBtn: {
+    },
+    favoritesBtn: {
         position: "absolute",
         top: 10,
         right: 10,

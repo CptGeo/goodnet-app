@@ -1,15 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Button,
-  Image,
-  View,
-  Platform,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { Button, Image, View, Platform, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard,} from "react-native";
+import PageHeader from "../components/PageHeader";
 import * as ImagePicker from "expo-image-picker";
 
 export default function Message() {
@@ -67,18 +58,8 @@ export default function Message() {
   return (
     <TouchableWithoutFeedback onPress={closeKeyboard}>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.headerImageWrapper}>
-            <Image
-              style={styles.headerImage}
-              source={require("../assets/goodnet_logo.png")}
-            />
-          </View>
-          <View style={styles.headerTextWrapper}>
-            <Text style={styles.headerText}>Στείλε Μήνυμα</Text>
-          </View>
-        </View>
-
+        <PageHeader title={"Στείλε Μήνυμα"}/>
+        
         <Button title="Pick an image from camera roll" onPress={pickImage} />
         {image && (
           <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
@@ -108,30 +89,6 @@ export default function Message() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#222",
-    paddingRight: 10,
-    maxHeight: 70,
-  },
-  headerText: {
-    color: "#fff",
-    fontSize: 20,
-  },
-  headerImageWrapper: {
-    padding: 10,
-    backgroundColor: "#fff",
-  },
-  headerTextWrapper: {
-    flex: 4,
-    marginLeft: 20,
-  },
-  headerImage: {
-    width: 70,
-    height: "100%",
   },
   messageInput: {
     minHeight: 60,
