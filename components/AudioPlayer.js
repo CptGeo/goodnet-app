@@ -65,7 +65,6 @@ export default function AudioPlayer(props) {
 
     if(!playing){
       setActiveImg(item.icon);
-      setActiveTitle(item.title);
       setActiveUrl(item.url);
       setActiveID(item.key);
       playSound(item.url);
@@ -74,7 +73,6 @@ export default function AudioPlayer(props) {
     }
     else if(activeID != item.key){
       setActiveImg(item.icon);
-      setActiveTitle(item.title);
       setActiveUrl(item.url);
       setActiveID(item.key);
       stopSound();
