@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import {TouchableOpacity} from 'react-native-gesture-handler'
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -14,28 +14,30 @@ export default function AudioPlayer(props) {
 
   //new
   const [activeImg, setActiveImg] = useState("");
-  const [activeTitle, setActiveTitle] = useState("");
   const [activeUrl, setActiveUrl] = useState("");
   const [activeID, setActiveID] = useState("");
   const [active, setActive] = useState(false);
   const [playing, setPlaying] = useState(false);
 
+  //could make use of the next and previous buttons
+  // const [hasNext, setHasNext] = useState(false);
+  // const [hasPrevious, setHasPrevious] = useState(false);
+  // const [next, setNext] = useState("");
+  // const [previous, setPrevious] = useState("");
 
 
 
-  // Audio.setAudioModeAsync({
-  //   // allowsRecordingIOS: false,
-  //   // staysActiveInBackground: true,
-  //   // interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
-  //   // playsInSilentModeIOS: true,
-  //   // shouldDuckAndroid: true,
-  //   // interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
-  //   // playThroughEarpieceAndroid: false
-  // });
 
-  // useEffect( () => {
-  //   return closePlayer;
-  // },[]);
+  Audio.setAudioModeAsync({
+    allowsRecordingIOS: false,
+    staysActiveInBackground: true,
+    interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
+    playsInSilentModeIOS: true,
+    shouldDuckAndroid: true,
+    interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+    playThroughEarpieceAndroid: false
+  });
+
   
 
   async function playSound(soundUri) {
@@ -56,12 +58,6 @@ export default function AudioPlayer(props) {
       setPlaying(false);
     }
   }
-
-  const closePlayer = () => {
-    stopSound();
-    setActive(false);
-  }
-
 
 
 
@@ -88,15 +84,18 @@ export default function AudioPlayer(props) {
   }
 
 
+  React.useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
 
-  // Delete the below if not needed
-  // React.useEffect(() => {
-  //   return sound
-  //     ? () => {
-  //         sound.unloadAsync();
-  //       }
-  //     : undefined;
-  // }, [sound]);
+
+  useEffect(() => {
+    console.log(playlists);
+  }, []);
 
 
   return (
@@ -216,5 +215,5 @@ const styles = StyleSheet.create({
   },
   gridView: {
     flex: 1,
-  },
+  }
 });
