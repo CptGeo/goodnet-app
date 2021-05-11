@@ -91,9 +91,9 @@ export default function AudioPlayer(props) {
   }, [sound]);
 
 
-  useEffect(() => {
-    console.log(playlists);
-  }, []);
+  // useEffect(() => {
+    // console.log(playlists);
+  // }, []);
 
 
   return (
