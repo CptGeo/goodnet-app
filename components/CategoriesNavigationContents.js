@@ -30,7 +30,7 @@ export default function CategoriesNavigationContents(props){
 
     if(!catsOk){
         return (
-            <ActivityIndicator color={"blue"}/>
+            <ActivityIndicator color={"#4374ca"}/>
         )
     }
     else{
