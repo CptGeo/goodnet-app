@@ -54,10 +54,7 @@ export default function BottomNavigationMenu(props){
                 setActiveTab("read_later");
                 break;
             }
-            // case "more" : {
-            //     setActiveTab("more");
-            //     break;
-            // } 
+
             default : {
                 setActiveTab("frontpage");
             }
