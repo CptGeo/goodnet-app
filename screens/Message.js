@@ -4,14 +4,26 @@ import PageHeader from "../components/PageHeader";
 import * as ImagePicker from "expo-image-picker";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import * as MailComposer from 'expo-mail-composer';
+
 
 export default function Message() {
-  const [image, setImage] = useState(null);
 
+  // States
+  const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
 
 
+  // Refs
+  const messageInput = useRef(null);
+
+
+  // useEffects
+
+  /**
+   * Gets permissions for file picking (once per load).
+   */
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -25,26 +37,15 @@ export default function Message() {
     })();
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== "web") {
-        const { status } = await ImagePicker.requestCameraPermissionsAsync();
-        if (status !== "granted") {
-          alert(
-            "Sorry! You need to grant camera permission in order to take a picture."
-          );
-        }
-      }
-    })();
-  }, []);
 
-  // useEffect(() => {});
-
-  const messageInput = useRef(null);
-
+  /**
+   * Handles the button that lets the user pick an image
+   */
   const pickImage = async () => {
+
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
+      videoExportPreset: ImagePicker.VideoExportPreset.LowQuality,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
@@ -55,6 +56,7 @@ export default function Message() {
     }
   };
 
+
   const closeKeyboard = () => {
     Keyboard.dismiss();
   };
@@ -63,12 +65,46 @@ export default function Message() {
     setImage("");
   }
 
-  const sendMessage = () => {
-    alert("OK");
+  /**
+   * Sends the message on button submit. Also handles the response
+   */
+  const sendMessage = async () => {
+
+    let result = await MailComposer.composeAsync({
+      recipients: ["georgekalyvianakis18@gmail.com"], // array of email addresses
+      subject: title ? title : "",
+      body: message ? message : "",
+      attachments: image ? [image] : []
+    });
+
+    //handle result
+    switch(result.status){
+      case "sent" : 
+        setImage("");
+        setTitle("");
+        setMessage("");
+        alert("Το μήνυμά σας απεστάλει με επιτυχία");
+      break;
+
+      case "cancelled" : 
+        alert("Η αποστολή μηνύματος ακυρώθηκε από το χρήστη");
+      break;
+
+      case "saved" :
+        alert("Το μήνυμα αποθηκεύθηκε στο πρόγραμμα απόστολής e-mail σας");
+      break;
+
+      case "undetermined" :
+        alert("Παρακαλώ δοκιμάστε ξανά. Το μήνυμα ίσως δεν απεστάλλει");
+      break;
+    }
   }
 
+
+
+
   return (
-    <TouchableWithoutFeedback onPress={closeKeyboard}>
+    <TouchableWithoutFeedback onPress={closeKeyboard} style={styles.container}>
       <View style={styles.container}>
         <PageHeader title={"Στείλε Μήνυμα"}/>
         <ScrollView style={styles.container}>
@@ -106,11 +142,11 @@ export default function Message() {
 
             <View style={styles.itemWrapper}>
               <View style={styles.labelWrapper}>
-                <Text style={styles.label}>Επιλογή εικόνας</Text>
+                <Text style={styles.label}>Επιλογή εικόνας ή βίντεο</Text>
               </View>
               <View>
                 <Button 
-                title={image ? "Επιλεξτε αλλη εικονα" : "Επιλεξτε εικονα για αποστολη"} 
+                title={"Επιλεξτε αρχειο"} 
                 color={"#222"} 
                 onPress={pickImage} />
                 <Text style={styles.smallText}>Μέγιστο όριο 2MB</Text>
@@ -126,19 +162,20 @@ export default function Message() {
             </View>
 
             <View style={styles.itemWrapper}>
-              {/* <View style={styles.labelWrapper}>
-                <Text style={styles.label}>Αποστολή μηνύματος</Text>
-              </View> */}
-              <View>
-                <Button title="Αποστολη ειδησης" color={"#4374ca"} onPress={sendMessage}/>
-              </View>
+              <Button title="Αποστολη ειδησης" color={"#4374ca"} onPress={sendMessage}/>
             </View>
           </View>
         </ScrollView>
       </View>
+
     </TouchableWithoutFeedback>
   );
 }
+
+
+
+
+
 
 const styles = StyleSheet.create({
   container: {
