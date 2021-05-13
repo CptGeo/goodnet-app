@@ -86,7 +86,7 @@ export default function Pinned({navigation}){
         <View style={styles.container}>
             <PageHeader title={"Αγαπημένα άρθρα"}/>
 
-            {found ? (
+            { (found && pinned.length > 0) ? (
                 <FlatGrid
                     itemDimension={180}
                     data={pinned}
@@ -124,7 +124,11 @@ export default function Pinned({navigation}){
             ) : 
             (
                 <View style={styles.nothingFoundWrapper}>
-                    <Text style={styles.nothingFound}>Δεν έχετε κανένα αγαπημένο άρθρο ...</Text>
+                    <Text style={styles.nothingFound}>Δεν έχετε κανένα αγαπημένο άρθρο.</Text>
+                    <View style={styles.notificationWrapper}>
+                        <Text style={styles.notificationMsg}>Πατήστε πάνω στην <Icon name={"heart-outline"} style={styles.notificationIcon} size={13} color={"#db2625"} /> για να αποθηκεύσετε τα άρθρα που σας ενδιαφέρουν</Text> 
+                    </View>
+                    
                 </View>
             )}
             
@@ -189,6 +193,19 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     nothingFound: {
-        color: "#999"
-    }
+        color: "#555",
+        opacity: 0.6,
+        fontSize: 16
+    },
+    notificationMsg: {
+        color: "#555",
+        textAlign: "center",
+        fontSize: 11
+    },
+    notificationWrapper: {
+        flexDirection: "row",
+        paddingHorizontal: 40,
+        marginTop: 10,
+        opacity: 0.6
+    },
 });
