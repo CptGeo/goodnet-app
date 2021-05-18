@@ -2,7 +2,7 @@
  * Home is the default screen
  */
 import GoodnetView from "../components/GoodnetView";
-import React, { useContext, useState, useEffect } from "react";
+import React from "react";
 import {TouchableOpacity} from 'react-native-gesture-handler'
 import {StyleSheet, View, Text, Image} from "react-native";
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
