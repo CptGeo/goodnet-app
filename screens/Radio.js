@@ -1,13 +1,13 @@
 import React from "react";
 import {View, StyleSheet} from "react-native";
-import AudioPlayer from "../components/AudioPlayer";
+import RadioStationPlayerGrid from "../components/RadioStationPlayerGrid";
 import PageHeader from "../components/PageHeader";
 
 export default function Radio() {
   return (
     <View style={styles.container}>
       <PageHeader title={"Άκου Ραδιόφωνο"}/>
-      <AudioPlayer />
+      <RadioStationPlayerGrid />
     </View>
 
   );
