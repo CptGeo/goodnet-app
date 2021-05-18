@@ -1,9 +1,5 @@
-// import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-// import Home from "./screens/Home";
-// import {goodnetSettings as gn} from "./settings/goodnetSettings";
-// import CategoriesNavigation from "./components/CategoriesNavigation";
 import UrlContext from "./components/UrlContext";
 import BottomNavigationMenu from "./components/BottomNavigationMenu";
 
@@ -14,8 +10,6 @@ import * as SQLite from 'expo-sqlite';
 
 
 export default function App() {
-  // const [settings, settingsChange] = useState(gn);
-
   const [url, urlChange] = useState("https://goodnet.gr");
 
   const args = {
