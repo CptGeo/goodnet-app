@@ -111,7 +111,7 @@ export default function RadioStationPlayerGrid(props) {
           <Image style={styles.thumb} source={{ uri: activeImg }} />
         </View>
           {!playing ? (
-            <View style={styles.container}>
+            <View style={styles.containerInner}>
               <Text></Text>
               <TouchableOpacity onPress={() => playSound(activeUrl)} style={styles.playerPlay}>
                 <View style={styles.iconWrapper}>
@@ -120,7 +120,7 @@ export default function RadioStationPlayerGrid(props) {
               </TouchableOpacity>
             </View>
           ) : (
-            <View style={styles.container}>
+            <View style={styles.containerInner}>
             <Text style={styles.timer}>{formatSecondsToTime(time)}</Text>
             <TouchableOpacity onPress={() => stopSound()} style={styles.playerPlay}>
               <View style={styles.iconWrapper}>
@@ -145,12 +145,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     maxHeight: 65,
     width: "100%",
-    paddingHorizontal : 15,
+    paddingHorizontal: 15,
     backgroundColor: "#4374ca",
-
     borderTopEndRadius : 15,
     borderTopStartRadius : 15,
-
+  },
+  containerInner: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   thumbWrapper : {
     width : "40%"
@@ -163,7 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    height : 100
+    height : 100,
   },
   text: {
     color: "#fff",
@@ -185,7 +189,7 @@ const styles = StyleSheet.create({
   },
   playerPlay : {
     flex : 1,
-    height : 65
+    height : 65,
   },
   playerPrevious : {
     flex : 1,
@@ -193,7 +197,18 @@ const styles = StyleSheet.create({
     opacity : 0.8
   },
   timer: {
-    color: "#fff",
-    fontSize: 22
-  }
+    color: "#333",
+    fontSize: 22,
+    backgroundColor: "rgba(255,255,255,1)",
+    height: 45,
+    borderRadius: 50,
+    textAlignVertical: "center",
+    paddingHorizontal: 15,
+
+    elevation:15,
+    shadowColor: '#000',
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 5, 
+  },
 });
