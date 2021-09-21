@@ -31,12 +31,4 @@ export default tabs = [
         barColor: '#222222',
         pressColor: '#4273c9'
     },
-    // {
-    //     id : 50,
-    //     key: 'more',
-    //     icon: 'dots-horizontal',
-    //     label: 'Περισσότερα',
-    //     barColor: '#222222',
-    //     pressColor: '#4273c9'
-    // },
 ];
