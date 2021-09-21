@@ -60,7 +60,6 @@ export default function RadioStationPlayerGrid(props) {
       setActiveID(item.key);
       playSound(item.url);
       setActive(true);
-      // startCountingSeconds();
     }
     else if(activeID != item.key){
       setActiveImg(item.icon);
@@ -169,32 +168,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height : 100,
   },
-  text: {
-    color: "#fff",
-    fontSize: 12,
-    textAlign: "center",
-  },
-  playerControlsWrapper : {
-    flex : 1,
-    flexDirection : "row",
-    alignContent : "center",
-    justifyContent : "space-between",
-    width : "40%",
-    minWidth : 230
-  },
-  playerNext : {
-    flex : 1,
-    marginLeft : 10,
-    opacity : 0.8
-  },
   playerPlay : {
     flex : 1,
     height : 65,
-  },
-  playerPrevious : {
-    flex : 1,
-    marginRight : 10,
-    opacity : 0.8
   },
   timer: {
     color: "#333",
