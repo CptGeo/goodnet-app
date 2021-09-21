@@ -2,7 +2,6 @@ import React from "react";
 import {TouchableOpacity, Image, StyleSheet} from "react-native";
 
 export default function RadioStationItem(props){
-
     return (
         <TouchableOpacity style={styles.itemContainer} onPress={() => props.pressHandler(props)}>
             <Image style={styles.image} source={{uri : props.stationImage}}/>
