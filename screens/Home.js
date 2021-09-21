@@ -31,7 +31,6 @@ export default function Home ({navigation}){
   )
 }
 
-
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -41,29 +40,5 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent : "center",
       alignItems : "center"
-    },
-    header : {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      backgroundColor: "#222",
-      paddingRight : 10,
-      maxHeight : 70,
-    },
-    headerText: {
-      color: "#fff",
-      fontSize : 20
-    },
-    headerImageWrapper: {
-      padding : 10,
-      backgroundColor: "#fff"
-    },
-    headerImage: {
-      width: 70,
-      height: "100%"
-    },
-    headerTextWrapper : {
-      flex: 4,
-      marginLeft : 20
     }
   });
