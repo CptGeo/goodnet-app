@@ -2,10 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import UrlContext from "./components/UrlContext";
 import BottomNavigationMenu from "./components/BottomNavigationMenu";
-
-
-//check here for more
-//https://github.com/expo/examples/blob/master/with-sqlite/App.js
 import * as SQLite from 'expo-sqlite';
 
 
@@ -40,8 +36,6 @@ export default function App() {
           favourite_url TEXT NOT NULL,
           timestamp TEXT DEFAULT CURRENT_TIMESTAMP
         );`;
-      
-      // const query = `DROP TABLE favourite_news`;
       tx.executeSql(query, [], successDB, errorDB);
     })
   }
@@ -54,7 +48,6 @@ export default function App() {
   return (
     <View style={styles.container}>
       <UrlContext.Provider value={args}>
-        {/* <CategoriesNavigation /> */}
         <BottomNavigationMenu />
       </UrlContext.Provider>
     </View>
