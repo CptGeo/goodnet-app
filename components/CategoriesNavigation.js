@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, View, StyleSheet, Text} from "react-native";
+import {StyleSheet} from "react-native";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import {NavigationContainer} from "@react-navigation/native";
 
@@ -8,7 +8,6 @@ import CategoriesNavigationContents from "./CategoriesNavigationContents";
 
 //screens
 import Home from "../screens/Home";
-
 
 const Drawer = createDrawerNavigator();
 
@@ -21,7 +20,6 @@ export default CategoriesNavigation = () => {
         </NavigationContainer>
     )
 }
-
 
 const styles = StyleSheet.create({
     container : {
