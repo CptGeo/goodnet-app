@@ -24,7 +24,6 @@ export default function RadioStationPicker(props) {
     )
 }
 
-
 const styles = StyleSheet.create({
     gridView: {
         flex: 1,
