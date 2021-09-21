@@ -2,14 +2,10 @@ import React, {useState, useEffect, useContext} from "react";
 import {View, Text, StyleSheet, Image, TouchableOpacity} from "react-native";
 import * as SQLite from "expo-sqlite";
 import {FlatGrid} from "react-native-super-grid";
-// import { Icon } from "react-native-vector-icons/Icon";
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import TabContext from "../components/TabContext";
 import UrlContext from "../components/UrlContext";
 import PageHeader from "../components/PageHeader";
-
-
-
 
 export default function Pinned({navigation}){
 
@@ -22,7 +18,6 @@ export default function Pinned({navigation}){
     const urlCtx = useContext(UrlContext);
 
     useEffect( () => {
-        // favouritesDB = SQLite.openDatabase("favourites");
         favouritesDB.transaction( tx => {
             const query = "SELECT * FROM favourite_news WHERE 1 ORDER BY timestamp DESC";
             tx.executeSql(
@@ -31,8 +26,6 @@ export default function Pinned({navigation}){
                 (tx, rs) => {
                     if(rs.rows.length > 0){
                         setFound(true);
-                        
-                        //parse result
                         let len = rs.rows.length;
                         let items = [];
                         for(let i = 0; i < len; i++ ){
@@ -44,15 +37,10 @@ export default function Pinned({navigation}){
                         setFound(false);
                     }
                 },
-                (tx, err) => {
-                    console.log("Query Error");
-                    console.log(err);
-                }
+                errorDB
             )
         });
     }, []);
-
-
     
     const readFavourite = item => {
         //set favourite url state
