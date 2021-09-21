@@ -83,7 +83,7 @@ export default function Message() {
         setImage("");
         setTitle("");
         setMessage("");
-        alert("Το μήνυμά σας απεστάλει με επιτυχία");
+        alert("Το μήνυμά σας απεστάλη με επιτυχία");
       break;
 
       case "cancelled" : 
@@ -95,7 +95,7 @@ export default function Message() {
       break;
 
       case "undetermined" :
-        alert("Παρακαλώ δοκιμάστε ξανά. Το μήνυμα ίσως δεν απεστάλλει");
+        alert("Παρακαλώ δοκιμάστε ξανά. Το μήνυμα ίσως δεν απεστάλη");
       break;
     }
   }
